@@ -1,0 +1,55 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">📚 전체 독서 기록 목록</h2>
+        <a href="/reviews/new" class="btn btn-primary">새 리뷰 작성</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col" class="ps-4">ID</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">저자</th>
+                    <th scope="col">평점</th>
+                    <th scope="col">작성일</th>
+                    <th scope="col" class="text-center">상세보기</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#bookReviewEntityList}}
+                    <tr>
+                        <th scope="row" class="ps-4">{{id}}</th>
+                        <td>
+                            <a href="/reviews/{{id}}" class="text-decoration-none fw-bold text-dark">
+                                {{title}}
+                            </a>
+                        </td>
+                        <td>{{author}}</td>
+                        <td>
+                            <span class="badge rounded-pill bg-info text-dark">⭐ {{rating}}</span>
+                        </td>
+                        <td><small class="text-muted">{{createdAt}}</small></td>
+                        <td class="text-center">
+                            <a href="/reviews/{{id}}" class="btn btn-sm btn-outline-secondary">조회</a>
+                        </td>
+                    </tr>
+                {{/bookReviewEntityList}}
+
+                {{^bookReviewEntityList}}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            아직 작성된 리뷰가 없습니다. 첫 기록을 남겨보세요!
+                        </td>
+                    </tr>
+                {{/bookReviewEntityList}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{>layouts/footer}}

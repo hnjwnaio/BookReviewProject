@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Controller
 public class BookReviewController {
@@ -47,5 +50,13 @@ public class BookReviewController {
         BookReview bookReviewEntity = bookReviewRepository.findById(id).orElse(null);
         model.addAttribute("bookReview", bookReviewEntity);
         return "reviews/show";
+    }
+
+    // 전체 조회
+    @GetMapping("/reviews")
+    public String index(Model model) {
+        List<BookReview> bookReviewEntityList = bookReviewRepository.findAll();
+        model.addAttribute("bookReviewEntityList", bookReviewEntityList);
+        return "reviews/index";
     }
 }
