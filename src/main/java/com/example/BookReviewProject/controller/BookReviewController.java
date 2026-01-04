@@ -59,4 +59,24 @@ public class BookReviewController {
         model.addAttribute("bookReviewEntityList", bookReviewEntityList);
         return "reviews/index";
     }
+
+    // 게시글 수정
+    @GetMapping("/reviews/{id}/edit")
+    public String edit(@PathVariable Long id, Model model) {
+        BookReview bookReviewEntity = bookReviewRepository.findById(id).orElse(null);
+        model.addAttribute("bookReview", bookReviewEntity);
+        return "reviews/edit";
+    }
+
+    @PostMapping("/reviews/update")
+    public String update(BookReviewForm form) {
+        BookReview bookReviewEntity = form.toEntity();
+        BookReview target = bookReviewRepository.findById(bookReviewEntity.getId()).orElse(null);
+
+        if(target != null) {
+            bookReviewRepository.save(bookReviewEntity);
+        }
+
+        return "redirect:/reviews/" + bookReviewEntity.getId();
+    }
 }
