@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
@@ -29,14 +30,22 @@ public class BookReviewController {
         log.info(form.toString());
 
         // 1. DTO를 Entity로 변환
-        BookReview bookReviewEntity = form.toEntity();
-        log.info(bookReviewEntity.toString());
+        BookReview bookReview = form.toEntity();
+        log.info(bookReview.toString());
 
         // 2. Repository를 이용해 Entity를 DB에 저장
-        BookReview saved = bookReviewRepository.save(bookReviewEntity);
+        BookReview saved = bookReviewRepository.save(bookReview);
         log.info(saved.toString());
 
         // 3. 저장 후 상세 페이지로 리다이렉트
         return "redirect:/reviews/" + saved.getId();
+    }
+
+    // 상세 조회
+    @GetMapping("/reviews/{id}")
+    public String show(@PathVariable Long id, Model model) {
+        BookReview bookReviewEntity = bookReviewRepository.findById(id).orElse(null);
+        model.addAttribute("bookReview", bookReviewEntity);
+        return "reviews/show";
     }
 }

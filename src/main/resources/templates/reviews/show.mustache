@@ -1,0 +1,53 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/reviews">목록</a></li>
+            <li class="breadcrumb-item active" aria-current="page">상세 보기</li>
+        </ol>
+    </nav>
+
+    {{#bookReview}}
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0 text-primary">{{title}}</h2>
+                    <span class="badge bg-warning text-dark fs-6">{{rating}} / 5 점</span>
+                </div>
+                <p class="text-muted mb-0 mt-2">저자: <strong>{{author}}</strong></p>
+            </div>
+
+            <div class="card-body py-4" style="min-height: 300px; line-height: 1.8;">
+                <div class="mb-4">
+                    <h5 class="text-secondary border-bottom pb-2">독서 후기</h5>
+                    <p class="card-text text-dark whitespace-pre-wrap">{{content}}</p>
+                </div>
+            </div>
+
+            <div class="card-footer bg-light py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">작성일: {{createdAt}}</small>
+                    <div>
+                        <a href="/reviews/{{id}}/edit" class="btn btn-outline-success me-2">수정하기</a>
+                        <a href="/reviews/{{id}}/delete" class="btn btn-outline-danger"
+                           onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/bookReview}}
+
+    <div class="mt-4 text-center">
+        <a href="/reviews" class="btn btn-secondary">목록으로 돌아가기</a>
+    </div>
+</div>
+
+<style>
+    /* 줄바꿈을 화면에 그대로 표시하기 위한 스타일 */
+    .whitespace-pre-wrap {
+        white-space: pre-wrap;
+    }
+</style>
+
+{{>layouts/footer}}
